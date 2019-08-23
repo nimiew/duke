@@ -1,9 +1,8 @@
-import java.io.File;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class DataHandler {
@@ -79,6 +78,32 @@ public class DataHandler {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    public void saveData(@NotNull ArrayList<Task> tasks) throws IOException {
+        FileWriter fw = new FileWriter(dukeDataPath.toString());
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            char taskType = task.getClass().getName().charAt(0);
+            boolean isDone = task.isDone;
+            int isDoneInt = isDone? 1 : 0;
+            String description = task.getDescription();
+            String line = null;
+            if(taskType == 'T'){
+                line = taskType + " | " + isDoneInt + " | " + description;
+            }
+            else if(taskType == 'D'){
+                Deadline deadline = (Deadline) task;
+                line = taskType + " | " + isDoneInt + " | " + description + " | " + deadline.getBy();
+            }
+            else if(taskType == 'E'){
+                Event event = (Event) task;
+                line = taskType + " | " + isDoneInt + " | " + description + " | " + event.getAt();
+            }
+            fw.write(line);
+            fw.write(System.lineSeparator());
+        }
+        fw.close();
     }
 
     public String getTask(char x){
