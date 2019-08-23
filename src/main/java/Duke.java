@@ -20,31 +20,62 @@ public class Duke {
             if(inStr.equals("list")){
                 System.out.println("Here are the tasks in your list:");
                 for(int i=0; i<nextIndex; i++){
-                    System.out.println((i+1) + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
+                    System.out.println((i+1) + "." + tasks[i].toString());
                 }
             }
             else if(inStr.equals("bye")){
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }
-            else if(inStr.length() >= 4 && inStr.substring(0, 4).equals("done")){
+            else if(inStr.length() >= 5 && inStr.substring(0, 5).equals("done ")){
                 boolean exists = false;
                 for(int i=0; i<nextIndex; i++){
                     if(tasks[i].getDescription().equals(inStr.substring(5))){
                         exists = true;
                         tasks[i].setDone(true);
                         System.out.println("Nice! I've marked this task as done:");
-                        System.out.println("[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
+                        System.out.println(tasks[i].toString());
                     }
                 }
                 if(!exists){
                     System.out.println("No such task!");
                 }
             }
+            else if(inStr.length() >= 5 && inStr.substring(0, 5).equals("todo ")){
+                tasks[nextIndex] = new Todo(inStr.substring(5));
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[nextIndex].toString());
+                nextIndex++;
+                System.out.println("Now you have " + nextIndex + " tasks in the list.");
+            }
+            else if(inStr.length() >= 9 && inStr.substring(0, 9).equals("deadline ")){
+                int first = inStr.indexOf("/by ");
+                int second = first + 4;
+                String description = inStr.substring(9, first-1);
+                String by = inStr.substring(second);
+                tasks[nextIndex] = new Deadline(description, by);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[nextIndex].toString());
+                nextIndex++;
+                System.out.println("Now you have " + nextIndex + " tasks in the list.");
+            }
+            else if(inStr.length() >= 6 && inStr.substring(0, 6).equals("event ")){
+                int first = inStr.indexOf("/at ");
+                int second = first + 4;
+                String description = inStr.substring(6, first-1);
+                String at = inStr.substring(second);
+                tasks[nextIndex] = new Event(description, at);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[nextIndex].toString());
+                nextIndex++;
+                System.out.println("Now you have " + nextIndex + " tasks in the list.");
+            }
             else{
                 tasks[nextIndex] = new Task(inStr);
-                System.out.println("added: " + inStr);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks[nextIndex].toString());
                 nextIndex++;
+                System.out.println("Now you have " + nextIndex + " tasks in the list.");
             }
         }
     }

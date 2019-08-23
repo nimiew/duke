@@ -30,4 +30,9 @@ public class Task {
     public void setDone(boolean isDone){
         this.isDone = isDone;
     }
+
+    @Override
+    public String toString(){
+        return "[" + getStatusIcon() + "] " + getDescription();
+    }
 }
