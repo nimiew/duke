@@ -4,23 +4,26 @@ public class Duke {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
 
-        Task[] tasks = new Task[100];
+        Task[] tasks = new Task[100]; // change to dictionary later
         int nextIndex = 0;
 
         Scanner in = new Scanner(System.in);
 
         while(true){
             String inStr = in.nextLine();
+            // List tasks
             if(inStr.equals("list")){
                 System.out.println("Here are the tasks in your list:");
                 for(int i=0; i<nextIndex; i++){
                     System.out.println((i+1) + "." + tasks[i].toString());
                 }
             }
+            // Exit program
             else if(inStr.equals("bye")){
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }
+            // Done task
             else if(inStr.length() >= 5 && inStr.substring(0, 5).equals("done ")){
                 boolean exists = false;
                 for(int i=0; i<nextIndex; i++){
@@ -35,6 +38,7 @@ public class Duke {
                     System.out.println("No such task!");
                 }
             }
+            // Create todo task
             else if(inStr.length() >= 5 && inStr.substring(0, 5).equals("todo ")){
                 try { tasks[nextIndex] = new Todo(inStr.substring(5)); }
                 catch(RuntimeException e) {
@@ -46,6 +50,7 @@ public class Duke {
                 nextIndex++;
                 System.out.println("Now you have " + nextIndex + " tasks in the list.");
             }
+            // Create deadline task
             else if(inStr.length() >= 9 && inStr.substring(0, 9).equals("deadline ")){
                 int first = inStr.indexOf("/by ");
                 if(first == -1){
@@ -65,6 +70,7 @@ public class Duke {
                 nextIndex++;
                 System.out.println("Now you have " + nextIndex + " tasks in the list.");
             }
+            // Create event task
             else if(inStr.length() >= 6 && inStr.substring(0, 6).equals("event ")){
                 int first = inStr.indexOf("/at ");
                 if(first == -1){
@@ -84,6 +90,7 @@ public class Duke {
                 nextIndex++;
                 System.out.println("Now you have " + nextIndex + " tasks in the list.");
             }
+            // Invalid command
             else{
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-()");
             }

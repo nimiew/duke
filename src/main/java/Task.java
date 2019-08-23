@@ -5,7 +5,7 @@ public class Task {
 
     public Task(String description){
         if(description.length() == 0){
-            throw new RuntimeException("☹ OOPS!!! The description of a task cannot be empty.");
+            throw new RuntimeException("☹ OOPS!!! The description of a task cannot be empty."); // what is string of whitespace
         }
         this.description = description;
         this.isDone = false;
