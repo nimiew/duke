@@ -1,12 +1,6 @@
 import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
-//        String logo = " ____        _        \n"
-//                + "|  _ \\ _   _| | _____ \n"
-//                + "| | | | | | | |/ / _ \\\n"
-//                + "| |_| | |_| |   <  __/\n"
-//                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
 
@@ -42,7 +36,11 @@ public class Duke {
                 }
             }
             else if(inStr.length() >= 5 && inStr.substring(0, 5).equals("todo ")){
-                tasks[nextIndex] = new Todo(inStr.substring(5));
+                try { tasks[nextIndex] = new Todo(inStr.substring(5)); }
+                catch(RuntimeException e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                }
                 System.out.println("Got it. I've added this task:");
                 System.out.println(tasks[nextIndex].toString());
                 nextIndex++;
@@ -50,10 +48,18 @@ public class Duke {
             }
             else if(inStr.length() >= 9 && inStr.substring(0, 9).equals("deadline ")){
                 int first = inStr.indexOf("/by ");
+                if(first == -1){
+                    System.out.println("When creating deadline task, require \"/by \" substring in command");
+                    continue;
+                }
                 int second = first + 4;
                 String description = inStr.substring(9, first-1);
                 String by = inStr.substring(second);
-                tasks[nextIndex] = new Deadline(description, by);
+                try { tasks[nextIndex] = new Deadline(description, by); }
+                catch(RuntimeException e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                }
                 System.out.println("Got it. I've added this task:");
                 System.out.println(tasks[nextIndex].toString());
                 nextIndex++;
@@ -61,21 +67,25 @@ public class Duke {
             }
             else if(inStr.length() >= 6 && inStr.substring(0, 6).equals("event ")){
                 int first = inStr.indexOf("/at ");
+                if(first == -1){
+                    System.out.println("When creating deadline task, require \"/at \" substring in command");
+                    continue;
+                }
                 int second = first + 4;
                 String description = inStr.substring(6, first-1);
                 String at = inStr.substring(second);
-                tasks[nextIndex] = new Event(description, at);
+                try { tasks[nextIndex] = new Event(description, at); }
+                catch(RuntimeException e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                }
                 System.out.println("Got it. I've added this task:");
                 System.out.println(tasks[nextIndex].toString());
                 nextIndex++;
                 System.out.println("Now you have " + nextIndex + " tasks in the list.");
             }
             else{
-                tasks[nextIndex] = new Task(inStr);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(tasks[nextIndex].toString());
-                nextIndex++;
-                System.out.println("Now you have " + nextIndex + " tasks in the list.");
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-()");
             }
         }
     }

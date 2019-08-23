@@ -3,7 +3,10 @@ public class Task {
     protected boolean isDone;
     protected static int numTasks = 0;
 
-    public Task(String description) {
+    public Task(String description){
+        if(description.length() == 0){
+            throw new RuntimeException("☹ OOPS!!! The description of a task cannot be empty.");
+        }
         this.description = description;
         this.isDone = false;
         numTasks++;
