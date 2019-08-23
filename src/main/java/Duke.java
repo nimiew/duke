@@ -1,11 +1,15 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
 
-        Task[] tasks = new Task[100]; // change to dictionary later
-        int nextIndex = 0;
+        DataHandler dataHandler = new DataHandler(); // Creates data dir and duke.txt if needed
+        ArrayList<Task> tasks = new ArrayList<Task>();; // change to dictionary later
+        dataHandler.loadData(tasks);
+
+        int nextIndex = tasks.size();
 
         Scanner in = new Scanner(System.in);
 
@@ -15,7 +19,7 @@ public class Duke {
             if(inStr.equals("list")){
                 System.out.println("Here are the tasks in your list:");
                 for(int i=0; i<nextIndex; i++){
-                    System.out.println((i+1) + "." + tasks[i].toString());
+                    System.out.println((i+1) + "." + tasks.get(i).toString());
                 }
             }
             // Exit program
@@ -27,11 +31,11 @@ public class Duke {
             else if(inStr.length() >= 5 && inStr.substring(0, 5).equals("done ")){
                 boolean exists = false;
                 for(int i=0; i<nextIndex; i++){
-                    if(tasks[i].getDescription().equals(inStr.substring(5))){
+                    if(tasks.get(i).getDescription().equals(inStr.substring(5))){
                         exists = true;
-                        tasks[i].setDone(true);
+                        tasks.get(i).setDone(true);
                         System.out.println("Nice! I've marked this task as done:");
-                        System.out.println(tasks[i].toString());
+                        System.out.println(tasks.get(i).toString());
                     }
                 }
                 if(!exists){
@@ -40,13 +44,13 @@ public class Duke {
             }
             // Create todo task
             else if(inStr.length() >= 5 && inStr.substring(0, 5).equals("todo ")){
-                try { tasks[nextIndex] = new Todo(inStr.substring(5)); }
+                try { tasks.add(new Todo(inStr.substring(5))); }
                 catch(RuntimeException e) {
                     System.out.println(e.getMessage());
                     continue;
                 }
                 System.out.println("Got it. I've added this task:");
-                System.out.println(tasks[nextIndex].toString());
+                System.out.println(tasks.get(nextIndex).toString());
                 nextIndex++;
                 System.out.println("Now you have " + nextIndex + " tasks in the list.");
             }
@@ -60,13 +64,13 @@ public class Duke {
                 int second = first + 4;
                 String description = inStr.substring(9, first-1);
                 String by = inStr.substring(second);
-                try { tasks[nextIndex] = new Deadline(description, by); }
+                try { tasks.add(new Deadline(description, by)); }
                 catch(RuntimeException e) {
                     System.out.println(e.getMessage());
                     continue;
                 }
                 System.out.println("Got it. I've added this task:");
-                System.out.println(tasks[nextIndex].toString());
+                System.out.println(tasks.get(nextIndex).toString());
                 nextIndex++;
                 System.out.println("Now you have " + nextIndex + " tasks in the list.");
             }
@@ -80,13 +84,13 @@ public class Duke {
                 int second = first + 4;
                 String description = inStr.substring(6, first-1);
                 String at = inStr.substring(second);
-                try { tasks[nextIndex] = new Event(description, at); }
+                try { tasks.add(new Event(description, at)); }
                 catch(RuntimeException e) {
                     System.out.println(e.getMessage());
                     continue;
                 }
                 System.out.println("Got it. I've added this task:");
-                System.out.println(tasks[nextIndex].toString());
+                System.out.println(tasks.get(nextIndex).toString());
                 nextIndex++;
                 System.out.println("Now you have " + nextIndex + " tasks in the list.");
             }
