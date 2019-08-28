@@ -1,10 +1,12 @@
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Duke {
     public static void main(String[] args){
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
+        System.out.println("Please ensure date is in dd/MM/yyyy HHmm format.");
 
         DataHandler dataHandler = new DataHandler(); // Creates data dir and duke.txt if needed
         ArrayList<Task> tasks = new ArrayList<Task>();; // change to dictionary later
@@ -78,6 +80,11 @@ public class Duke {
                         System.out.println(e.getMessage());
                         continue;
                     }
+                    catch (ParseException e){ // catch all
+                        System.out.println("Please ensure date is in dd/MM/yyyy HHmm format.");
+                        continue;
+                    }
+
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(nextIndex).toString());
                     nextIndex++;
@@ -103,6 +110,9 @@ public class Duke {
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
                         continue;
+                    }catch (ParseException e){ // catch all
+                        System.out.println("Please ensure date is in dd/MM/yyyy HHmm format.");
+                        continue;
                     }
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(nextIndex).toString());
@@ -116,6 +126,7 @@ public class Duke {
                 }
             }
         }
+
         catch (Exception e){ // catch all
             e.printStackTrace();
         }

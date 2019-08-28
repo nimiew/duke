@@ -3,6 +3,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class DataHandler {
@@ -74,6 +75,9 @@ public class DataHandler {
                 line = reader.readLine();
             }
             reader.close();
+        } catch (ParseException e) {
+            System.out.println("Please ensure date is in dd/MM/yyyy HHmm format.");
+
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
