@@ -12,8 +12,6 @@ public class Duke {
         ArrayList<Task> tasks = new ArrayList<Task>();; // change to dictionary later
         dataHandler.loadData(tasks);
 
-        int nextIndex = tasks.size();
-
         Scanner in = new Scanner(System.in);
         try {
             while (true) {
@@ -21,7 +19,7 @@ public class Duke {
                 // List tasks
                 if (inStr.equals("list")) {
                     System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < nextIndex; i++) {
+                    for (int i = 0; i < tasks.size(); i++) {
                         System.out.println((i + 1) + "." + tasks.get(i).toString());
                     }
                 }
@@ -30,10 +28,24 @@ public class Duke {
                     System.out.println("Bye. Hope to see you again soon!");
                     break;
                 }
+                // Remove task
+                else if (inStr.length() >= 7 && inStr.substring(0, 7).equals("delete ")) {
+                    int pos = Integer.parseInt(inStr.substring(7));
+                    if (pos<=tasks.size()) {
+                        System.out.println("Noted. I've removed this task:");
+                        System.out.println(tasks.get(pos-1).toString());
+                        tasks.remove(pos-1); // Order is impt
+                        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                        dataHandler.saveData(tasks); // to optimize
+                    }
+                    else {
+                        System.out.println("No such task!");
+                    }
+                }
                 // Done task
                 else if (inStr.length() >= 5 && inStr.substring(0, 5).equals("done ")) {
                     boolean exists = false;
-                    for (int i = 0; i < nextIndex; i++) {
+                    for (int i = 0; i < tasks.size(); i++) {
                         if (tasks.get(i).getDescription().equals(inStr.substring(5))) {
                             exists = true;
                             tasks.get(i).setDone(true);
@@ -55,9 +67,8 @@ public class Duke {
                         continue;
                     }
                     System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks.get(nextIndex).toString());
-                    nextIndex++;
-                    System.out.println("Now you have " + nextIndex + " tasks in the list.");
+                    System.out.println(tasks.get(tasks.size()-1).toString());
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     dataHandler.saveData(tasks); // to optimize
                 }
                 // Create deadline task
@@ -86,9 +97,8 @@ public class Duke {
                     }
 
                     System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks.get(nextIndex).toString());
-                    nextIndex++;
-                    System.out.println("Now you have " + nextIndex + " tasks in the list.");
+                    System.out.println(tasks.get(tasks.size()-1).toString());
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     dataHandler.saveData(tasks); // to optimize
                 }
                 // Create event task
@@ -115,9 +125,8 @@ public class Duke {
                         continue;
                     }
                     System.out.println("Got it. I've added this task:");
-                    System.out.println(tasks.get(nextIndex).toString());
-                    nextIndex++;
-                    System.out.println("Now you have " + nextIndex + " tasks in the list.");
+                    System.out.println(tasks.get(tasks.size()-1).toString());
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     dataHandler.saveData(tasks); // to optimize
                 }
                 // Invalid command
