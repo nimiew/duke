@@ -1,5 +1,3 @@
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -84,7 +82,7 @@ public class DataHandler {
         }
     }
 
-    public void saveData(@NotNull ArrayList<Task> tasks) throws IOException {
+    public void saveData(ArrayList<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(dukeDataPath.toString());
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);

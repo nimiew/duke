@@ -1,0 +1,8 @@
+Hello! I'm Duke
+What can I do for you?
+Please ensure date is in dd/MM/yyyy HHmm format.
+Here are the tasks in your list:
+1.[D][✓] return book (by: 2/12/2019 1800)
+2.[D][✘] abcd (by: 12/13/1234 1220)
+3.[E][✘] yugopj (at: 12/13/1990 2323)
+Bye. Hope to see you again soon!
