@@ -28,6 +28,7 @@ public class Duke {
                     System.out.println("Bye. Hope to see you again soon!");
                     break;
                 }
+<<<<<<< HEAD
                 // Remove task
                 else if (inStr.length() >= 7 && inStr.substring(0, 7).equals("delete ")) {
                     int pos = Integer.parseInt(inStr.substring(7));
@@ -40,6 +41,24 @@ public class Duke {
                     }
                     else {
                         System.out.println("No such task!");
+=======
+                // Find tasks
+                else if (inStr.length() >= 5 && inStr.substring(0, 5).equals("find ")) {
+                    ArrayList<Task> foundTasks = new ArrayList<Task>();
+                    for (int i = 0; i < tasks.size(); i++) {
+                        if (tasks.get(i).getDescription().contains(inStr.substring(5))) {
+                            foundTasks.add(tasks.get(i));
+                        }
+                    }
+                    if (foundTasks.size()==0) {
+                        System.out.println("No tasks found!");
+                    }
+                    else {
+                        System.out.println("Here are the matching tasks in your list:");
+                        for (int i=0; i < foundTasks.size(); i++) {
+                            System.out.println((i + 1) + "." + foundTasks.get(i).toString());
+                        }
+>>>>>>> branch-Level-9
                     }
                 }
                 // Done task
