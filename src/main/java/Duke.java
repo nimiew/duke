@@ -30,17 +30,21 @@ public class Duke {
                 }
                 // Remove task
                 else if (inStr.length() >= 7 && inStr.substring(0, 7).equals("delete ")) {
-                    int pos = Integer.parseInt(inStr.substring(7));
-                    if (pos<=tasks.size()) {
+                    int pos = 0;
+                    try{
+                        pos = Integer.parseInt(inStr.substring(7));
+                    }
+                    catch (Exception e){
+                        System.out.println("Please ensure you enter the task number; E.g. \"delete 2\"");
+                    }
+                    if (pos <= tasks.size()) {
                         System.out.println("Noted. I've removed this task:");
-                        System.out.println(tasks.get(pos-1).toString());
-                        tasks.remove(pos-1); // Order is impt
+                        System.out.println(tasks.get(pos - 1).toString());
+                        tasks.remove(pos - 1); // Order is impt
                         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                         dataHandler.saveData(tasks); // to optimize
-                    }
-                    else {
-                        System.out.println("No such task!");
-                    }
+                    } else System.out.println("No such task!");
+                }
                 // Find tasks
                 else if (inStr.length() >= 5 && inStr.substring(0, 5).equals("find ")) {
                     ArrayList<Task> foundTasks = new ArrayList<Task>();
